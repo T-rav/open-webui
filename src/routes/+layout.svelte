@@ -4,10 +4,6 @@
 	import PyodideWorker from '$lib/workers/pyodide.worker?worker';
 	import { patchFetch } from '$lib/patch-fetch';
 
-	// Patch fetch to include credentials with all requests
-	if (typeof window !== 'undefined') {
-		patchFetch();
-	}
 
 	let loadingProgress = spring(0, {
 		stiffness: 0.05
@@ -469,6 +465,10 @@
 	};
 
 	onMount(async () => {
+		if (typeof window !== 'undefined') {
+			patchFetch();
+		}
+		
 		if (typeof window !== 'undefined' && window.applyTheme) {
 			window.applyTheme();
 		}

@@ -2,6 +2,12 @@
 	import { io } from 'socket.io-client';
 	import { spring } from 'svelte/motion';
 	import PyodideWorker from '$lib/workers/pyodide.worker?worker';
+	import { patchFetch } from '$lib/patch-fetch';
+
+	// Patch fetch to include credentials with all requests
+	if (typeof window !== 'undefined') {
+		patchFetch();
+	}
 
 	let loadingProgress = spring(0, {
 		stiffness: 0.05
